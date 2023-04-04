@@ -1,5 +1,6 @@
 import java.io.File;
 import java.util.Scanner;
+import java.util.Arrays;
 public class cnfConverter{
     //Replace all biconditionals(a = b) with (a > b) & (b > a)
     //Replace all implies(a > b) with ~a | b
@@ -12,7 +13,8 @@ public class cnfConverter{
             Scanner sc = new Scanner(file);
             String input = sc.nextLine();
             input = input.replaceAll(" ", "");
-            System.out.println(input);
+            char[] inputArray = input.toCharArray();
+            System.out.println(Arrays.toString(inputArray));
 
 
             sc.close();
