@@ -8,7 +8,7 @@ public class cnfConverter{
 
     public static void main(String[]args) {
         try {
-            File file = new File("./placeHolder.txt");
+            File file = new File("./cnfExample.txt");
             Scanner sc = new Scanner(file);
             String input = sc.nextLine();
             input = input.replaceAll(" ", "");
