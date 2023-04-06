@@ -2,6 +2,9 @@ import java.io.File;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -51,7 +54,29 @@ public class plResolution {
     }
 
     private static String[] mergeLines(String[] lineOne, String[] lineTwo) {
-        return null;
+        List<String> returnList = Arrays.asList(lineOne);
+        String logicalOpp;
+        for (String addString : lineTwo) {
+            if(addString.length() == 1){
+                logicalOpp = "~" + addString;
+            }else{
+                logicalOpp = addString.substring(1);
+            }
+
+            if(returnList.contains(logicalOpp)){
+                returnList.remove(logicalOpp);
+            }else{
+                if(!returnList.contains(addString)){
+                    returnList.add(addString);
+                }
+            }
+        }
+        Collections.sort(returnList);
+        for (String string : returnList) {
+            System.out.println(string);
+        }
+        String[] returnArray = (String[]) returnList.toArray();
+        return returnArray;
     }
 
 }
