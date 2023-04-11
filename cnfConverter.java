@@ -1,6 +1,5 @@
 import java.io.File;
 import java.util.Scanner;
-import java.util.Arrays;
 
 public class cnfConverter{
     //Replace all biconditionals(a = b) with (a > b) & (b > a)
