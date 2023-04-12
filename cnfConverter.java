@@ -13,6 +13,11 @@ public class cnfConverter{
             Scanner sc = new Scanner(file);
             String input = sc.nextLine();
             Tree myTree = new Tree(input);
+            Node headNode = myTree.getHeadNode();
+            myTree.biConditionalConversion(headNode);
+            myTree.impliesConversion(headNode);
+            myTree.applyDeMorgan(headNode);
+            myTree.distributionOverAnd(headNode);
             
 
 

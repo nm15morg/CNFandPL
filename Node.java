@@ -3,19 +3,32 @@ public class Node {
     boolean isOperator;
     Node leftChild;
     Node rightChild;
-    String value;
     Node parent;
     boolean isNot;
     String content;
 
-    public Node(boolean isOperator, String value){
+    public Node(boolean isOperator, String content){
         this.isOperator = isOperator;
         this.leftChild = null;
         this.rightChild = null;
-        this.value = value;
         isNot = false;
-        content = "";
+        this.content = content;
         parent = null;
+    }
+
+    public Node(Node node, Node parent){
+        this.isOperator = node.getIsOperator();
+        this.content = node.getContent();
+        this.leftChild = node.getLeftChild();
+        this.rightChild = node.getRightChild();
+        this.isNot = node.getNot();
+        this.parent = parent;
+        if(node.getLeftChild() != null){
+            Node newLeftChild = new Node(node.getLeftChild(), this);
+        }
+        if(node.getRightChild() != null){
+            Node newRightChild = new Node(node.getRightChild(), this);
+        }
     }
 
     public void setParent(Node parent){
@@ -56,5 +69,9 @@ public class Node {
 
     public boolean getNot(){
         return isNot;
+    }
+
+    public Node getParent(){
+        return parent;
     }
 }
