@@ -97,7 +97,7 @@ public class Tree {
             biConditionalConversion(rightChild);
         }
         if(parentNode.getIsOperator() && parentNode.getContent().equals("=")){
-            parentNode.setContent("|");
+            parentNode.setContent("&");
             leftChild = parentNode.getLeftChild();
             rightChild = parentNode.getRightChild();
 
