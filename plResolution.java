@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 public class plResolution{
     public static void main(String[] args) {
-        File file = new File(".///logic_test_cases//trivial2_CNF.txt");
+        File file = new File(".///logic_test_cases//easy3_CNF.txt");
         ArrayList<List<String>> printArray = new ArrayList<>();
         ArrayList<List<String>> inputLines = readInput(file);
         for (List<String> line : inputLines) {
@@ -17,6 +17,7 @@ public class plResolution{
         }
         propositionResolution(inputLines, printArray);
         ArrayList<String> printArrayAsString = convertToString(printArray);
+        //System.out.println("Input Lines Size: " + inputLines.size());
         outputToFile(printArrayAsString);
     
     }
@@ -43,7 +44,7 @@ public class plResolution{
         for (int i = 0; i < inputLines.size() - 1; i++) {
             List<String> line1 = inputLines.get(i);
             List<String> line2 = inputLines.get(i + 1);
-            for (int j = 0; j < line1.size() - 1; j++) {
+            for (int j = 0; j < line1.size(); j++) {
                 String searchString;
                 if(line1.get(j).length() == 1){
                     searchString = "~" + line1.get(j);
@@ -78,7 +79,6 @@ public class plResolution{
                 returnList.add(string);
             }
         }
-        returnList.remove(searchString);
         if(searchString.length() == 1){
             removeFromOne = "~" + searchString;
         }else{

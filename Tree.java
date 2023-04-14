@@ -23,7 +23,17 @@ public class Tree {
                 charStack.add(placement);
             }
         }
+        
         headNode = holdList.get(holdList.size() - 1);
+        if(!charStack.isEmpty()){
+            charStack.pop();
+        }
+        while(!charStack.isEmpty()){
+            char not = charStack.pop();
+            if(not == '~'){
+                headNode.setNot(!headNode.getNot());
+            }
+        }
     }
 
     public Node getHeadNode(){
@@ -51,7 +61,7 @@ public class Tree {
             char currentChar = nodeContents.charAt(i);
             //System.out.println(currentChar);
             if(currentChar == '~'){
-                modifier = true;
+                modifier = !modifier;
             }else if(isOperator(currentChar)){
                 oppNode.setContent(String.valueOf(currentChar));
             }else if(!Character.isDigit(currentChar)){
