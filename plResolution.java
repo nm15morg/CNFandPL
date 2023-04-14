@@ -8,8 +8,9 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class plResolution{
+
     public static void main(String[] args) {
-        File file = new File(".///logic_test_cases//easy3_CNF.txt");
+        File file = new File(".///logic_test_cases//medium2_CNF.txt");
         ArrayList<List<String>> printArray = new ArrayList<>();
         ArrayList<List<String>> inputLines = readInput(file);
         for (List<String> line : inputLines) {
