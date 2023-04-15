@@ -74,4 +74,8 @@ public class Node {
     public Node getParent(){
         return parent;
     }
+
+    public void setIsOperator(boolean isOperator){
+        this.isOperator = isOperator;
+    }
 }

@@ -1,5 +1,9 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
+import java.util.regex.Pattern;
 public class Tree {
     
     Node headNode;
@@ -59,7 +63,6 @@ public class Tree {
         Node oppNode = new Node(true, null);
         for (int i = 0; i < nodeContents.length(); i++) {
             char currentChar = nodeContents.charAt(i);
-            //System.out.println(currentChar);
             if(currentChar == '~'){
                 modifier = !modifier;
             }else if(isOperator(currentChar)){
@@ -93,7 +96,6 @@ public class Tree {
             }
             
         }
-        //System.out.println(oppNode.getContent());
         return oppNode;
     }
 
@@ -126,9 +128,6 @@ public class Tree {
             parentNode.setRightChild(newRight);
             Node copyOfLeft = new Node(leftChild, newRight);
             newRight.setRightChild(copyOfLeft);
-
-
-
         }
 
 
@@ -170,7 +169,42 @@ public class Tree {
     }
 
     public void distributionOverAnd(Node parentNode){
+        Node leftChild = parentNode.getLeftChild();
+        Node rightChild = parentNode.getRightChild();
+        if(parentNode.getIsOperator() && parentNode.getContent().equals("|")){
+            if((leftChild.getIsOperator() && leftChild.getContent().equals("&")) || (rightChild.getIsOperator() && rightChild.getContent().equals("&"))){
+                if(leftChild.getContent().equals("&")){
+                    Node rightSideOne = new Node(rightChild, leftChild);
+                    Node rightSideTwo = new Node(rightChild, rightChild);
+                    Node leftRight = new Node(leftChild.getRightChild(), rightChild);
+                    parentNode.setContent("&");
+                    leftChild.setContent("|");
+                    rightChild.setContent("|");
+                    rightChild.setIsOperator(true);
+                    leftChild.setRightChild(rightSideOne);
+                    rightChild.setLeftChild(leftRight);
+                    rightChild.setRightChild(rightSideTwo);
+                }else{
+                    Node leftSideOne = new Node(leftChild, rightChild);
+                    Node leftSideTwo = new Node(leftChild, leftChild);
+                    Node rightLeft = new Node(rightChild.getLeftChild(), leftChild);
+                    parentNode.setContent("&");
+                    leftChild.setContent("|");
+                    rightChild.setContent("|");
+                    leftChild.setIsOperator(true);
+                    rightChild.setLeftChild(leftSideOne);
+                    leftChild.setRightChild(rightLeft);
+                    leftChild.setLeftChild(leftSideTwo);
+                }
+            }
+        }
 
+        if(leftChild != null){
+            distributionOverAnd(leftChild);
+        }
+        if(rightChild != null){
+            distributionOverAnd(rightChild);
+        }
     }
 
     public void printTree(Node parentNode){
@@ -185,6 +219,40 @@ public class Tree {
         if(parentNode.getRightChild() != null){
             printTree(parentNode.getRightChild());
         }
+    }
+
+    public String toOutput(Node parentNode){
+        if(!parentNode.getIsOperator()){
+            if(parentNode.getNot()){
+                return "~" + parentNode.getContent();
+            }else{
+                return parentNode.getContent();
+            }
+        }
+
+        return toOutput(parentNode.getLeftChild()) + parentNode.getContent() + toOutput(parentNode.getRightChild());
+
+    }
+
+    public ArrayList<String> alphabetizeString(String string){
+        Pattern pattern = Pattern.compile("&");
+        ArrayList<String> outputArray = new ArrayList<>();
+        List<String> treeaAsLine = Arrays.asList(pattern.split(string));
+        for (String myString : treeaAsLine) {
+            Pattern pattern2 = Pattern.compile("|");
+            List<String> eachLine = Arrays.asList(pattern2.split(myString));
+            Collections.sort(eachLine);
+            String outputString = "";
+            for (String string2 : eachLine) {
+                outputString = outputString + string2 + ",";
+            }
+            outputString = outputString.substring(0, outputString.length() - 1);
+            outputString = "(" + outputString + ")";
+            outputArray.add(outputString);
+        }
+        Collections.sort(outputArray);
+        return outputArray;
+
     }
     
 }
